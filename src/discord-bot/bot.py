@@ -2,9 +2,17 @@ import discord
 import os
 import random
 
+import sys
+
+# setting path
+sys.path.append("../common")
+
+from db import Database
 from dotenv import load_dotenv
 
 load_dotenv()
+
+database = Database()
 
 
 class MyClient(discord.Client):
@@ -16,10 +24,15 @@ class MyClient(discord.Client):
 
         if message.content == "$link-account":
             await message.reply("I have sent you a dm to link up your account!")
+
             await message.author.send(
                 "To link up your account send the following message to the user 'Beardedhippo' in the osu! ingame chat:"
             )
-            await message.author.send(f"$verify {self.generate_verification_code()}")
+
+            verification_code = self.generate_verification_code()
+            await message.author.send(f"$verify {verification_code}")
+
+            db.store_verification_code(message.author.id, verification_code)
 
     def generate_verification_code(self):
         verification_code_lenght = 32
