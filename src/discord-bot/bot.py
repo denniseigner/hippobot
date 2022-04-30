@@ -8,9 +8,7 @@ import sys
 sys.path.append("../common")
 
 from db import Database
-from dotenv import load_dotenv
-
-load_dotenv()
+from sqlite3 import IntegrityError
 
 database = Database()
 
@@ -32,7 +30,7 @@ class MyClient(discord.Client):
             verification_code = self.generate_verification_code()
             await message.author.send(f"$verify {verification_code}")
 
-            db.store_verification_code(message.author.id, verification_code)
+            database.store_verification_code(message.author.id, verification_code)
 
     def generate_verification_code(self):
         verification_code_lenght = 32

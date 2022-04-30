@@ -7,9 +7,9 @@ name = "pypi"
 "discord.py" = "*"
 irc = "*"
 pre-commit = "*"
-python-dotenv = "*"
 
 [dev-packages]
+ipdb = "*"
 
 [requires]
 python_version = "3.8"
